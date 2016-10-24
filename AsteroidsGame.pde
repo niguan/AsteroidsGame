@@ -1,12 +1,25 @@
 //your variable declarations here
+SpaceShip bob;
+Rock joe;
 public void setup() 
 {
   //your code here
   size(500,500);
+  bob = new SpaceShip();
+  joe = new Rock();
 }
 public void draw() 
 {
   //your code here
+  background(255);
+  bob.show();
+  bob.move();
+  bob.rotate(5);
+  bob.accelerate(.06);
+  joe.show();
+  joe.move();
+  joe.rotate(8);
+  joe.accelerate(.08);
 }
 class SpaceShip extends Floater  
 {   
@@ -16,49 +29,82 @@ class SpaceShip extends Floater
     corners = 13;
     xCorners = new int[corners];
     yCorners = new int[corners];
-    xCorners[0] = 6;
+    xCorners[0] = 18;
     yCorners[0] = 0;
-    xCorners[1] = 2;
-    yCorners[1] = 4;
-    xCorners[2] = -1;
-    yCorners[2] = 3;
-    xCorners[3] = -1;
-    yCorners[3] = 5;
-    xCorners[4] = -4;
-    yCorners[4] = 5;
-    xCorners[5] = -4;
-    yCorners[5] = 2;
-    xCorners[6] = -3;
-    yCorners[6] = 2;
-    xCorners[7] = -3;
-    yCorners[7] = -2;
-    xCorners[8] = -4;
-    yCorners[8] = -2;
-    xCorners[9] = -4;
-    yCorners[9] = -5;
-    xCorners[10] = -1;
-    yCorners[10] = -5;
-    xCorners[11] = -1;
-    yCorners[11] = -3;
-    xCorners[12] = 2;
-    yCorners[12] = -4;
-    myColor = Color(0);
-    myCenterX = 0.00;
-    myCenterY = 0.00;
+    xCorners[1] = 6;
+    yCorners[1] = 12;
+    xCorners[2] = -3;
+    yCorners[2] = 9;
+    xCorners[3] = -3;
+    yCorners[3] = 15;
+    xCorners[4] = -12;
+    yCorners[4] = 15;
+    xCorners[5] = -12;
+    yCorners[5] = 6;
+    xCorners[6] = -9;
+    yCorners[6] = 6;
+    xCorners[7] = -9;
+    yCorners[7] = -6;
+    xCorners[8] = -12;
+    yCorners[8] = -6;
+    xCorners[9] = -12;
+    yCorners[9] = -15;
+    xCorners[10] = -3;
+    yCorners[10] = -15;
+    xCorners[11] = -3;
+    yCorners[11] = -9;
+    xCorners[12] = 6;
+    yCorners[12] = -12;
+    myColor = color(0,0,0);
+    myCenterX = 0.0;
+    myCenterY = 0.0;
     myDirectionX = 2.0;
     myDirectionY = 3.0;
     myPointDirection = 10;
   }
   public void setX(int x){myCenterX = x;}
-  public int getX() {return myCenterX;}
+  public int getX() {return (int)myCenterX;}
   public void setY(int y){myCenterY = y;}
-  public int getY() {return myCenterY;}
-  public void setDrirectionX() {myDirectionX = x;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
   public double getDirectionX() {return myDirectionX;}
-  public void setDirectionY() {myDirectionY = y;}
+  public void setDirectionY(double y) {myDirectionY = y;}
   public double getDirectionY() {return myDirectionY;}
-  public void setPointDirection() {myPointDirection = degrees;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
+}
+class Rock extends Floater
+{
+  public Rocks()
+  {
+    corners = 5;
+    xCorners[0] = 12;
+    yCorners[0] = 0;
+    xCorners[1] = 4;
+    yCorners[1] = 8;
+    xCorners[2] = -2;
+    yCorners[2] = 6;
+    xCorners[3] = -2;
+    yCorners[3] = 10;
+    xCorners[4] = -8;
+    yCorners[4] = 10;
+    myColor = color(255,0,0);
+    myCenterRx = 0.0;
+    myCenterRy = 0.0;
+    myDirectionRx = 2.0;
+    myDirectionRy = -3.0;
+    myPointDirectionR = 5;
+  }
+  public void setX(int x){myCenterRx = x;}
+  public int getX() {return (int)myCenterRx;}
+  public void setY(int y){myCenterRy = y;}
+  public int getY() {return (int)myCenterRy;}
+  public void setDirectionX(double x) {myDirectionRx = x;}
+  public double getDirectionX() {return myDirectionRx;}
+  public void setDirectionY(double y) {myDirectionRy = y;}
+  public double getDirectionY() {return myDirectionRy;}
+  public void setPointDirection(int degrees) {myPointDirectionR = degrees;}
+  public double getPointDirection() {return myPointDirectionR;}
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   

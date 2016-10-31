@@ -30,9 +30,9 @@ public void keyPressed()
     bob.setDirectionY(0.0);
     bob.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'a')  {bob.rotate(10);}
-  if (key == 'd')  {bob.rotate(-10);}
-  if (key == 'w')  {bob.accelerate(.12);}
+  if (key == 'a')  {bob.rotate(-10);}
+  if (key == 'd')  {bob.rotate(10);}
+  if (key == 'w')  {bob.accelerate(.22);}
 }
 class Star
 {
@@ -108,7 +108,15 @@ class Asteroid extends Floater
     aX = (int)(Math.random()*600);
     aY = (int)(Math.random()*600);
     speedRotate = (int)((Math.random()*6)-3);
-    corners = 8;
+    myCenterX = 0.0;
+    myCenterY = 0.0;
+    myDirectionX = 2.0;
+    myDirectionY = -3.0;
+    myPointDirection = 5;
+  }
+    public void show()
+    {
+          corners = 8;
     xCorners = new int[corners];
     yCorners = new int[corners];
     xCorners[0] = 7;
@@ -128,16 +136,10 @@ class Asteroid extends Floater
     xCorners[7] = -7;
     yCorners[7] = -14;
     myColor = color(255,0,0);
-    myCenterX = 0.0;
-    myCenterY = 0.0;
-    myDirectionX = 2.0;
-    myDirectionY = -3.0;
-    myPointDirection = 5;
-  }
-    public void show()
+    }
+    public void move()
     {
-      fill(255,0,0);
-      //ellipse(aX,aY,38,38);
+      speedRotate = (int)((Math.random()*6)-3);
     }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}

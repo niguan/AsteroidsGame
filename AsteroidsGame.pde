@@ -1,24 +1,28 @@
 //your variable declarations here
 SpaceShip bob;
-Asteroid [] rock = new Asteroid[5];
+Asteroid rock;
 Star [] galaxy = new Star[250];
 public void setup() 
 {
   //your code here
   size(600,600);
-  bob = new SpaceShip();
-  for (int i = 0; i < rock.length; i++) {rock[i] = new Asteroid();}
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
+  bob = new SpaceShip();
+  rock = new Asteroid();
+  //for (int i = 0; i < rock.length; i++) {rock[i] = new Asteroid();}
 }
 public void draw() 
 {
   //your code here
   background(0);
+  for (int j = 0; j <galaxy.length; j++) {galaxy[j].show();}
   bob.show();
   bob.move();
   bob.rotate(0);
-  for (int i = 0; i < rock.length; i++) {rock[i].show();}
-  for (int j = 0; j <galaxy.length; j++) {galaxy[j].show();}
+  rock.show();
+  rock.move();
+  rock.accelerate(.02);
+  //for (int i = 0; i < rock.length; i++) {rock[i].show();}
 }
 public void keyPressed()
 {
@@ -107,16 +111,8 @@ class Asteroid extends Floater
   {
     aX = (int)(Math.random()*600);
     aY = (int)(Math.random()*600);
-    speedRotate = (int)((Math.random()*6)-3);
-    myCenterX = 0.0;
-    myCenterY = 0.0;
-    myDirectionX = 2.0;
-    myDirectionY = -3.0;
-    myPointDirection = 5;
-  }
-    public void show()
-    {
-          corners = 8;
+    speedRotate = (int)((Math.random()*12)-6);
+    corners = 8;
     xCorners = new int[corners];
     yCorners = new int[corners];
     xCorners[0] = 7;
@@ -136,10 +132,16 @@ class Asteroid extends Floater
     xCorners[7] = -7;
     yCorners[7] = -14;
     myColor = color(255,0,0);
-    }
+    myCenterX = (int)(Math.random()*600);
+    myCenterY = (int)(Math.random()*600);
+    myDirectionX = 0;
+    myDirectionY = 0;
+    myPointDirection = (int)(Math.random()*100);
+  }
     public void move()
     {
-      speedRotate = (int)((Math.random()*6)-3);
+      rotate(speedRotate);
+      super.move();
     }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}
@@ -203,8 +205,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     }    
     if(myCenterY >height)
     {    
-      myCenterY = 0;    
-    }   
+      myCenterY = 0;
+    }
     else if (myCenterY < 0)
     {     
       myCenterY = height;    

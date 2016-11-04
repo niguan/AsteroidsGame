@@ -24,7 +24,6 @@ public void draw()
   {
     rock[i].show();
     rock[i].move();
-    rock[i].accelerate(.005);
   }
 }
 public void keyPressed()
@@ -137,9 +136,9 @@ class Asteroid extends Floater
     myColor = color(255,0,0);
     myCenterX = (int)(Math.random()*800);
     myCenterY = (int)(Math.random()*800);
-    myDirectionX = 0;
-    myDirectionY = 0;
-    myPointDirection = (int)(Math.random()*100);
+    myDirectionX = (int)(Math.random()*3);
+    myDirectionY = (int)(Math.random()*3);
+    myPointDirection = (int)(Math.random()*360);
   }
     public void move()
     {

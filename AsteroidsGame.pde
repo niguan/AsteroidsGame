@@ -1,15 +1,16 @@
 //your variable declarations here
 SpaceShip bob;
-Asteroid rock;
-Star [] galaxy = new Star[250];
+Asteroid [] rock;
+Star [] galaxy = new Star[330];
 public void setup() 
 {
   //your code here
-  size(600,600);
+  size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  rock = new Asteroid();
-  //for (int i = 0; i < rock.length; i++) {rock[i] = new Asteroid();}
+  rock = new Asteroid[8];
+  for (int i = 0; i < rock.length; i++) {rock[i] = new Asteroid();}
+    //rock[] =  new Asteroid ();
 }
 public void draw() 
 {
@@ -19,32 +20,34 @@ public void draw()
   bob.show();
   bob.move();
   bob.rotate(0);
-  rock.show();
-  rock.move();
-  rock.accelerate(.02);
-  //for (int i = 0; i < rock.length; i++) {rock[i].show();}
+  for (int i = 0; i < rock.length; i++)
+  {
+    rock[i].show();
+    rock[i].move();
+    rock[i].accelerate(.005);
+  }
 }
 public void keyPressed()
 {
   if (key == 's') //hyperspace
   {
-    bob.setX((int)(Math.random()*600));
-    bob.setY((int)(Math.random()*600));
+    bob.setX((int)(Math.random()*800));
+    bob.setY((int)(Math.random()*800));
     bob.setDirectionX(0.0);
     bob.setDirectionY(0.0);
     bob.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'a')  {bob.rotate(-10);}
-  if (key == 'd')  {bob.rotate(10);}
-  if (key == 'w')  {bob.accelerate(.22);}
+  if (key == 'a')  {bob.rotate(-20);}
+  if (key == 'd')  {bob.rotate(20);}
+  if (key == 'w')  {bob.accelerate(.12);}
 }
 class Star
 {
   private int sX, sY;
   public Star()
   {
-    sX = (int)(Math.random() *600);
-    sY = (int)(Math.random()* 600);
+    sX = (int)(Math.random() *800);
+    sY = (int)(Math.random()* 800);
   }
     public void show()
     {
@@ -88,10 +91,10 @@ class SpaceShip extends Floater
     yCorners[12] = -24;
     myColor = color(200,200,200);
     myCenterX = 100;
-    myCenterY = (int)(Math.random()*600);
+    myCenterY = (int)(Math.random()*800);
     myDirectionX = 0.0;
     myDirectionY = 0.0;
-    myPointDirection = 0;
+    myPointDirection = (int)(Math.random()*360);
   }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}
@@ -109,31 +112,31 @@ class Asteroid extends Floater
   private int aX,aY,speedRotate;
   public Asteroid()
   {
-    aX = (int)(Math.random()*600);
-    aY = (int)(Math.random()*600);
-    speedRotate = (int)((Math.random()*12)-6);
+    aX = (int)(Math.random()*800);
+    aY = (int)(Math.random()*800);
+    speedRotate = (int)((Math.random()*18)-9);
     corners = 8;
     xCorners = new int[corners];
     yCorners = new int[corners];
-    xCorners[0] = 7;
-    yCorners[0] = -14;
-    xCorners[1] = 14;
-    yCorners[1] = -7;
-    xCorners[2] = 14;
-    yCorners[2] = 7;
-    xCorners[3] = 7;
-    yCorners[3] = 14;
-    xCorners[4] = -7;
-    yCorners[4] = 14;
-    xCorners[5] = -14;
-    yCorners[5] = 7;
-    xCorners[6] = -14;
-    yCorners[6] = -7;
-    xCorners[7] = -7;
-    yCorners[7] = -14;
+    xCorners[0] = 9;
+    yCorners[0] = -18;
+    xCorners[1] = 18;
+    yCorners[1] = -9;
+    xCorners[2] = 18;
+    yCorners[2] = 9;
+    xCorners[3] = 9;
+    yCorners[3] = 18;
+    xCorners[4] = -9;
+    yCorners[4] = 18;
+    xCorners[5] = -18;
+    yCorners[5] = 9;
+    xCorners[6] = -18;
+    yCorners[6] = -9;
+    xCorners[7] = -9;
+    yCorners[7] = -18;
     myColor = color(255,0,0);
-    myCenterX = (int)(Math.random()*600);
-    myCenterY = (int)(Math.random()*600);
+    myCenterX = (int)(Math.random()*800);
+    myCenterY = (int)(Math.random()*800);
     myDirectionX = 0;
     myDirectionY = 0;
     myPointDirection = (int)(Math.random()*100);

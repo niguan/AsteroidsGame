@@ -1,6 +1,6 @@
 //your variable declarations here
 SpaceShip bob;
-Asteroid [] rock;
+ArrayList <Asteroid> rock;
 Star [] galaxy = new Star[330];
 public void setup() 
 {
@@ -8,9 +8,9 @@ public void setup()
   size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  rock = new Asteroid[8];
-  for (int i = 0; i < rock.length; i++) {rock[i] = new Asteroid();}
-    //rock[] =  new Asteroid ();
+  rock = new ArrayList <Asteroid>();
+  //Asteroid thingy = new Asteroid(9);
+  for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
 }
 public void draw() 
 {
@@ -20,11 +20,13 @@ public void draw()
   bob.show();
   bob.move();
   bob.rotate(0);
-  for (int i = 0; i < rock.length; i++)
+  for (int i = 0; i < 9; i++)
   {
-    rock[i].show();
-    rock[i].move();
+    rock.get(i).show();
+    rock.get(i).move();
   }
+  //if spaceship touches an asteroid, asteroid disappears
+  //if spaceship comes within 20 from asteroid, also
 }
 public void keyPressed()
 {
@@ -39,6 +41,7 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
+  if key
 }
 class Star
 {

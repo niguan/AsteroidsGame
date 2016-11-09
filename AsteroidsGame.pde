@@ -26,7 +26,14 @@ public void draw()
     rock.get(i).move();
   }
   //if spaceship touches an asteroid, asteroid disappears
-  //if spaceship comes within 20 from asteroid, also
+  //if spaceship comes within 20 from asteroid, asteroid also disappears
+  for (int i = 0; i< 9; i++)
+  {
+    if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 20)
+    {
+      rock.remove(i);
+    }
+  }
 }
 public void keyPressed()
 {
@@ -41,7 +48,6 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
-  if key
 }
 class Star
 {
@@ -145,6 +151,8 @@ class Asteroid extends Floater
   }
     public void move()
     {
+      //if spaceship touches an asteroid, asteroid disappears
+      //if spaceship comes within 20 from asteroid, asteroid also disappears
       rotate(speedRotate);
       super.move();
     }
@@ -159,6 +167,7 @@ class Asteroid extends Floater
   public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
 }
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   

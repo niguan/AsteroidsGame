@@ -1,6 +1,7 @@
 //your variable declarations here
 SpaceShip bob;
 ArrayList <Asteroid> rock;
+Bullet shot;
 Star [] galaxy = new Star[330];
 public void setup() 
 {
@@ -9,7 +10,6 @@ public void setup()
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
   rock = new ArrayList <Asteroid>();
-  //Asteroid thingy = new Asteroid(9);
   for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
 }
 public void draw() 
@@ -17,23 +17,23 @@ public void draw()
   //your code here
   background(0);
   for (int j = 0; j <galaxy.length; j++) {galaxy[j].show();}
-  bob.show();
-  bob.move();
-  bob.rotate(0);
   for (int i = 0; i < 9; i++)
   {
     rock.get(i).show();
     rock.get(i).move();
   }
-  //if spaceship touches an asteroid, asteroid disappears
-  //if spaceship comes within 20 from asteroid, asteroid also disappears
   for (int i = 0; i< 9; i++)
   {
-    if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 20)
+    if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
     {
       rock.remove(i);
+      rock.add(0, new Asteroid());
     }
   }
+  bob.show();
+  bob.move();
+  bob.rotate(0);
+  shot.show();
 }
 public void keyPressed()
 {
@@ -156,6 +156,34 @@ class Asteroid extends Floater
       rotate(speedRotate);
       super.move();
     }
+  public void setX(int x){myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;}
+}
+class Bullet extends Floater
+{
+  private double dRadians;
+  public Bullet()
+  {
+    myCenterX = (int)(bob.getX());
+    myCenterY = (int)(bob.getY());
+    myPointDirection = (int)(bob.getPointDirection());
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
+    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+  }
+   public void show()
+  {
+    fill(255,255,20);
+    noStroke();
+    ellipse(bob.getX(),bob.getY(),100,100);
+  }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}
   public void setY(int y){myCenterY = y;}

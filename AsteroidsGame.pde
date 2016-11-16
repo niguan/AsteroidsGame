@@ -1,7 +1,7 @@
 //your variable declarations here
 SpaceShip bob;
 ArrayList <Asteroid> rock;
-Bullet shot;
+ArrayList <Bullet> shot;
 Star [] galaxy = new Star[330];
 public void setup() 
 {
@@ -9,6 +9,8 @@ public void setup()
   size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
+  shot = new ArrayList <Bullet>(bob);
+  for (int k = 0; k < 0; k++) {shot.add(k, new Bullet());}
   rock = new ArrayList <Asteroid>();
   for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
 }
@@ -22,6 +24,11 @@ public void draw()
     rock.get(i).show();
     rock.get(i).move();
   }
+  for (int k = 0; k < 0; k++)
+  {
+    shot.get(i).show();
+    shot.get(i).move();
+  }
   for (int i = 0; i< 9; i++)
   {
     if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
@@ -33,7 +40,7 @@ public void draw()
   bob.show();
   bob.move();
   bob.rotate(0);
-  shot.show();
+  //shot.show();
 }
 public void keyPressed()
 {
@@ -48,6 +55,7 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
+  if (key == ' ')  {shot.add(0, new Bullet());}
 }
 class Star
 {
@@ -170,10 +178,11 @@ class Asteroid extends Floater
 class Bullet extends Floater
 {
   private double dRadians;
-  public Bullet()
+  public Bullet(SpaceShip bob)
   {
-    myCenterX = (int)(bob.getX());
-    myCenterY = (int)(bob.getY());
+    double dRadians = myPointDirection*(Math.PI/180);
+    myCenterX = (int)(bob.getX()-15);
+    myCenterY = (int)(bob.getY()-15);
     myPointDirection = (int)(bob.getPointDirection());
     myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
     myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
@@ -182,7 +191,7 @@ class Bullet extends Floater
   {
     fill(255,255,20);
     noStroke();
-    ellipse(bob.getX(),bob.getY(),100,100);
+    ellipse(bob.getX(),bob.getY(),20,20);
   }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}

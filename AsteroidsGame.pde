@@ -1,7 +1,7 @@
 //your variable declarations here
 SpaceShip bob;
 ArrayList <Asteroid> rock;
-ArrayList <Bullet> shot;
+// ArrayList <Bullet> shot;
 Star [] galaxy = new Star[330];
 public void setup() 
 {
@@ -9,8 +9,9 @@ public void setup()
   size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  shot = new ArrayList <Bullet>(bob);
-  for (int k = 0; k < 0; k++) {shot.add(k, new Bullet());}
+  // shot = new ArrayList <Bullet>();
+  // //shot = new Bullet(bob);
+  // for (int k = 0; k < 1; k++) {shot.add(k, new Bullet());}
   rock = new ArrayList <Asteroid>();
   for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
 }
@@ -24,11 +25,12 @@ public void draw()
     rock.get(i).show();
     rock.get(i).move();
   }
-  for (int k = 0; k < 0; k++)
-  {
-    shot.get(i).show();
-    shot.get(i).move();
-  }
+  
+  // for (int k = 0; k < 1; k++)
+  // {
+  //   shot.get(k).show();
+  //   shot.get(k).move();
+  // }
   for (int i = 0; i< 9; i++)
   {
     if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
@@ -40,7 +42,6 @@ public void draw()
   bob.show();
   bob.move();
   bob.rotate(0);
-  //shot.show();
 }
 public void keyPressed()
 {
@@ -55,7 +56,7 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
-  if (key == ' ')  {shot.add(0, new Bullet());}
+//  if (key == ' ')  {shot.add(0, new Bullet());}
 }
 class Star
 {
@@ -153,8 +154,8 @@ class Asteroid extends Floater
     myColor = color(255,0,0);
     myCenterX = (int)(Math.random()*800);
     myCenterY = (int)(Math.random()*800);
-    myDirectionX = (int)(Math.random()*3);
-    myDirectionY = (int)(Math.random()*3);
+    myDirectionX = (int)(Math.random()*8)-4;
+    myDirectionY = (int)(Math.random()*8)-4;
     myPointDirection = (int)(Math.random()*360);
   }
     public void move()
@@ -175,42 +176,13 @@ class Asteroid extends Floater
   public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
 }
-class Bullet extends Floater
-{
-  private double dRadians;
-  public Bullet(SpaceShip bob)
-  {
-    double dRadians = myPointDirection*(Math.PI/180);
-    myCenterX = (int)(bob.getX()-15);
-    myCenterY = (int)(bob.getY()-15);
-    myPointDirection = (int)(bob.getPointDirection());
-    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
-    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
-  }
-   public void show()
-  {
-    fill(255,255,20);
-    noStroke();
-    ellipse(bob.getX(),bob.getY(),20,20);
-  }
-  public void setX(int x){myCenterX = x;}
-  public int getX() {return (int)myCenterX;}
-  public void setY(int y){myCenterY = y;}
-  public int getY() {return (int)myCenterY;}
-  public void setDirectionX(double x) {myDirectionX = x;}
-  public double getDirectionX() {return myDirectionX;}
-  public void setDirectionY(double y) {myDirectionY = y;}
-  public double getDirectionY() {return myDirectionY;}
-  public void setPointDirection(int degrees) {myPointDirection = degrees;}
-  public double getPointDirection() {return myPointDirection;}
-}
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
-  protected int[] yCorners;   
-  protected int myColor;   
+  protected int[] yCorners;
+  protected int myColor;
   protected double myCenterX, myCenterY; //holds center coordinates   
   protected double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
@@ -226,7 +198,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   abstract public double getPointDirection(); 
 
   //Accelerates the floater in the direction it is pointing (myPointDirection)   
-  public void accelerate (double dAmount)   
+  public void accelerate (double dAmount)
   {          
     //convert the current direction the floater is pointing to radians    
     double dRadians =myPointDirection*(Math.PI/180);     

@@ -1,7 +1,7 @@
 //your variable declarations here
 SpaceShip bob;
 ArrayList <Asteroid> rock;
-// ArrayList <Bullet> shot;
+ArrayList <Bullet> shot;
 Star [] galaxy = new Star[330];
 public void setup() 
 {
@@ -9,9 +9,7 @@ public void setup()
   size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  // shot = new ArrayList <Bullet>();
-  // //shot = new Bullet(bob);
-  // for (int k = 0; k < 1; k++) {shot.add(k, new Bullet());}
+  shot = new ArrayList <Bullet>();
   rock = new ArrayList <Asteroid>();
   for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
 }
@@ -24,13 +22,12 @@ public void draw()
   {
     rock.get(i).show();
     rock.get(i).move();
+  }  
+  for (int k = 0; k < shot.size(); k++)
+  {
+    shot.get(k).show();
+    shot.get(k).move();
   }
-  
-  // for (int k = 0; k < 1; k++)
-  // {
-  //   shot.get(k).show();
-  //   shot.get(k).move();
-  // }
   for (int i = 0; i< 9; i++)
   {
     if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
@@ -56,8 +53,10 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
-//  if (key == ' ')  {shot.add(0, new Bullet());}
-}
+  if (key == ' ')  
+  {
+    shot.add(0, new Bullet(bob));}
+  }
 class Star
 {
   private int sX, sY;
@@ -165,6 +164,38 @@ class Asteroid extends Floater
       rotate(speedRotate);
       super.move();
     }
+  public void setX(int x){myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y){myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;}
+}
+class Bullet extends Floater
+{
+  private double dRadians;
+  public Bullet(SpaceShip bob)
+  {
+    double dRadians = myPointDirection*(Math.PI/180);
+    myCenterX = (int)(bob.getX()-15);
+    myCenterY = (int)(bob.getY()-15);
+    myPointDirection = (int)(bob.getPointDirection());
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
+    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+  }
+   public void show()
+  {
+    fill(255,255,20);
+    ellipse(bob.getX(),bob.getY(),20,20);
+  }
+  public void move()
+  {
+    myCenterX++; 
+  }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}
   public void setY(int y){myCenterY = y;}

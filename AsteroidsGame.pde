@@ -1,7 +1,6 @@
 //your variable declarations here
 SpaceShip bob;
 ArrayList <Asteroid> rock;
-//Bullet shot;
 ArrayList <Bullet> shot;
 Star [] galaxy = new Star[330];
 public void setup() 
@@ -10,7 +9,6 @@ public void setup()
   size(800,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  //shot = new Bullet(bob);
   shot = new ArrayList <Bullet>();
   rock = new ArrayList <Asteroid>();
   for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
@@ -42,8 +40,6 @@ public void draw()
   bob.show();
   bob.move();
   bob.rotate(0);
-  //shot.show();
- // shot.move();
 }
 public void keyPressed()
 {
@@ -58,12 +54,12 @@ public void keyPressed()
   if (key == 'a')  {bob.rotate(-20);}
   if (key == 'd')  {bob.rotate(20);}
   if (key == 'w')  {bob.accelerate(.12);}
-  if (key == 'z')  
+ }
+public void keyTyped()
+{
+   if (key == 'z')  
   {
-    //shot.accelerate(1);
     shot.add(new Bullet(bob));
-  //   shot.show();
-  //   shot.move();
   }
 }
 class Star
@@ -187,17 +183,17 @@ class Bullet extends Floater
   private double dRadians;
   public Bullet(SpaceShip bob)
   {
+    myPointDirection = (int)(bob.getPointDirection());
     dRadians = myPointDirection*(Math.PI/180);
     myCenterX = (int)(bob.getX()-15);
     myCenterY = (int)(bob.getY()-15);
-    myPointDirection = (int)(bob.getPointDirection());
     myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
     myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
+    myColor = color(255,255,20);
   }
    public void show()
   {
-    fill(255,255,20);
-    ellipse(bob.getX(),bob.getY(),20,20);
+    ellipse((int)myCenterX, (int)myCenterY,20,20);
   }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}
@@ -287,4 +283,3 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     endShape(CLOSE);  
   }   
 } 
-

@@ -25,9 +25,10 @@ public void draw()
   }  
   for (int k = 0; k < shot.size(); k++)
   {
-     shot.get(k).show();
-     shot.get(k).move();
-     System.out.println(shot.size());
+    fill(255,255,20);
+    stroke(255,255,20);
+    shot.get(k).show();
+    shot.get(k).move();
   }
   for (int i = 0; i< 9; i++)
   {
@@ -36,6 +37,14 @@ public void draw()
       rock.remove(i);
       rock.add(0, new Asteroid());
     }
+    for (int k =0; k < shot.size();k++)
+    {
+      if (dist(shot.get(k).getX(), shot.get(k).getY(), rock.get(i).getX(), rock.get(i).getY()) < 15)
+      {
+        rock.remove(i);
+        rock.add(0, new Asteroid());
+      }
+    }  
   }
   bob.show();
   bob.move();
@@ -51,15 +60,15 @@ public void keyPressed()
     bob.setDirectionY(0.0);
     bob.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'a')  {bob.rotate(-20);}
-  if (key == 'd')  {bob.rotate(20);}
+  if (key == 'a')  {bob.rotate(-10);}
+  if (key == 'd')  {bob.rotate(10);}
   if (key == 'w')  {bob.accelerate(.12);}
  }
-public void keyTyped()
-{
-   if (key == 'z')  
+public void mousePressed()
+{ 
   {
     shot.add(new Bullet(bob));
+    System.out.println(shot.size());
   }
 }
 class Star
@@ -87,8 +96,8 @@ class SpaceShip extends Floater
     xCorners[0] = 36;
     yCorners[0] = 0;
     xCorners[1] = 12;
-    yCorners[1] = 24;
     xCorners[2] = -6;
+    yCorners[1] = 24;
     yCorners[2] = 18;
     xCorners[3] = -6;
     yCorners[3] = 30;
@@ -193,7 +202,12 @@ class Bullet extends Floater
   }
    public void show()
   {
-    ellipse((int)myCenterX, (int)myCenterY,20,20);
+    ellipse((int)myCenterX, (int)myCenterY,5,5);
+  }
+  public void move()
+  {
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY; 
   }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}

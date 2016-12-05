@@ -2,7 +2,7 @@
 SpaceShip bob;
 ArrayList <Asteroid> rock;
 ArrayList <Bullet> shot;
-Star [] galaxy = new Star[330];
+Star [] galaxy = new Star[300];
 public void setup() 
 {
   //your code here
@@ -18,7 +18,7 @@ public void draw()
   //your code here
   background(0);
   for (int j = 0; j <galaxy.length; j++) {galaxy[j].show();}
-  for (int i = 0; i < 9; i++)
+  for (int i = 0; i < 8; i++)
   {
     rock.get(i).show();
     rock.get(i).move();
@@ -29,8 +29,9 @@ public void draw()
     stroke(255,255,20);
     shot.get(k).show();
     shot.get(k).move();
+    shot.get(k).accelerate(.03);
   }
-  for (int i = 0; i< 9; i++)
+  for (int i = 0; i< 8; i++)
   {
     if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
     {
@@ -39,16 +40,23 @@ public void draw()
     }
     for (int k =0; k < shot.size();k++)
     {
-      if (dist(shot.get(k).getX(), shot.get(k).getY(), rock.get(i).getX(), rock.get(i).getY()) < 15)
+      if (dist(shot.get(k).getX(), shot.get(k).getY(), rock.get(i).getX(), rock.get(i).getY()) < 20)
       {
         rock.remove(i);
         rock.add(0, new Asteroid());
+        shot.remove(k);
+        break;
       }
     }  
   }
   bob.show();
   bob.move();
   bob.rotate(0);
+  if (bob.rotate() > 1)
+  {
+    shot.rotate() = bob.rotate();
+  }
+
 }
 public void keyPressed()
 {
@@ -60,8 +68,8 @@ public void keyPressed()
     bob.setDirectionY(0.0);
     bob.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'a')  {bob.rotate(-10);}
-  if (key == 'd')  {bob.rotate(10);}
+  if (key == 'a')  {bob.rotate(-5);}
+  if (key == 'd')  {bob.rotate(5);}
   if (key == 'w')  {bob.accelerate(.12);}
  }
 public void mousePressed()
@@ -194,9 +202,9 @@ class Bullet extends Floater
   {
     myPointDirection = (int)(bob.getPointDirection());
     dRadians = myPointDirection*(Math.PI/180);
-    myCenterX = (int)(bob.getX()-15);
-    myCenterY = (int)(bob.getY()-15);
-    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionY();
+    myCenterX = (int)(bob.getX());
+    myCenterY = (int)(bob.getY());
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionX();
     myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
     myColor = color(255,255,20);
   }
@@ -206,8 +214,8 @@ class Bullet extends Floater
   }
   public void move()
   {
-    myCenterX += myDirectionX;    
-    myCenterY += myDirectionY; 
+    myCenterX += myDirectionX;
+    myCenterY += myDirectionY;
   }
   public void setX(int x){myCenterX = x;}
   public int getX() {return (int)myCenterX;}

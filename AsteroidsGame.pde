@@ -3,22 +3,24 @@ SpaceShip bob;
 ArrayList <Asteroid> rock;
 ArrayList <Bullet> shot;
 Star [] galaxy = new Star[400];
+Healthbar bar;
 public void setup() 
 {
   //your code here
   size(1000,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
+  bar = new Healthbar();
   shot = new ArrayList <Bullet>();
   rock = new ArrayList <Asteroid>();
-  for (int i = 0; i< 9; i++) {rock.add(i, new Asteroid());}
+  for (int i = 0; i< 12; i++) {rock.add(i, new Asteroid());}
 }
 public void draw() 
 {
   //your code here
   background(0);
   for (int j = 0; j <galaxy.length; j++) {galaxy[j].show();}
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < 12; i++)
   {
     rock.get(i).show();
     rock.get(i).move();
@@ -30,12 +32,13 @@ public void draw()
     shot.get(k).show();
     shot.get(k).move();
   }
-  for (int i = 0; i< 8; i++)
+  for (int i = 0; i< 12; i++)
   {
     if (dist(bob.getX(), bob.getY(), rock.get(i).getX(), rock.get(i).getY()) < 35)
     {
       rock.remove(i);
       rock.add(0, new Asteroid());
+      bar.move();
     }
     for (int k =0; k < shot.size();k++)
     {
@@ -50,6 +53,7 @@ public void draw()
   }
   bob.show();
   bob.move();
+  bar.show();
 }
 public void keyPressed()
 {
@@ -61,16 +65,32 @@ public void keyPressed()
     bob.setDirectionY(0.0);
     bob.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'a')  {bob.rotate(-5);}
-  if (key == 'd')  {bob.rotate(5);}
-  if (key == 'w')  {bob.accelerate(0.2);}
+  if (key == 'a')  {bob.rotate(-15);}
+  if (key == 'd')  {bob.rotate(15);}
+  if (key == 'w')  {bob.accelerate(0.35);}
  }
 public void mousePressed()
 { 
   {
     shot.add(new Bullet(bob));
-    System.out.println(shot.size());
   }
+}
+class Healthbar
+{
+  private int bX;
+  public Healthbar()
+  {
+    bX = 150;
+  }
+    public void show()
+    {
+      fill(0,255,0);
+      rect(15,15,bX,15);
+    }
+    public void move()
+    {
+      bX = bX - 10;
+    }
 }
 class Star
 {
@@ -197,8 +217,8 @@ class Bullet extends Floater
     dRadians = myPointDirection*(Math.PI/180);
     myCenterX = (int)(bob.getX());
     myCenterY = (int)(bob.getY());
-    myDirectionX = 10 * Math.cos(dRadians) + bob.getDirectionX();
-    myDirectionY = 10 * Math.sin(dRadians) + bob.getDirectionY();
+    myDirectionX = 5 * Math.cos(dRadians) + bob.getDirectionX();
+    myDirectionY = 5 * Math.sin(dRadians) + bob.getDirectionY();
     myColor = color(255,255,20);
   }
   public void setX(int x){myCenterX = x;}

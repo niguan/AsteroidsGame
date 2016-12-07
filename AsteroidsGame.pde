@@ -3,14 +3,12 @@ SpaceShip bob;
 ArrayList <Asteroid> rock;
 ArrayList <Bullet> shot;
 Star [] galaxy = new Star[400];
-Healthbar bar;
 public void setup() 
 {
   //your code here
   size(1000,800);
   for (int j = 0; j < galaxy.length; j++) {galaxy[j] = new Star();}
   bob = new SpaceShip();
-  bar = new Healthbar();
   shot = new ArrayList <Bullet>();
   rock = new ArrayList <Asteroid>();
   for (int i = 0; i< 12; i++) {rock.add(i, new Asteroid());}
@@ -38,7 +36,6 @@ public void draw()
     {
       rock.remove(i);
       rock.add(0, new Asteroid());
-      bar.move();
     }
     for (int k =0; k < shot.size();k++)
     {
@@ -53,7 +50,6 @@ public void draw()
   }
   bob.show();
   bob.move();
-  bar.show();
 }
 public void keyPressed()
 {
@@ -74,23 +70,6 @@ public void mousePressed()
   {
     shot.add(new Bullet(bob));
   }
-}
-class Healthbar
-{
-  private int bX;
-  public Healthbar()
-  {
-    bX = 150;
-  }
-    public void show()
-    {
-      fill(0,255,0);
-      rect(15,15,bX,15);
-    }
-    public void move()
-    {
-      bX = bX - 10;
-    }
 }
 class Star
 {
